@@ -17,6 +17,7 @@ import {
 } from '../src/actions';
 import { interval } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import stringify from 'fast-safe-stringify';
 
 const user = { name: 'David' };
 
@@ -1702,7 +1703,7 @@ describe('invoke', () => {
       );
 
       expect(() => {
-        JSON.stringify(waitingState);
+        stringify(waitingState);
       }).not.toThrow();
 
       expect(typeof waitingState.actions[0].activity!.src).toBe('string');

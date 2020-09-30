@@ -1,6 +1,7 @@
 import { raise, assign } from '../src/actions';
 import { Machine } from '../src';
 import { testMultiTransition } from './utils';
+import stringify from 'fast-safe-stringify';
 
 const composerMachine = Machine({
   strict: true,
@@ -521,7 +522,7 @@ describe('parallel states', () => {
         list: 'none'
       }
     },
-    [JSON.stringify({
+    [stringify({
       bold: 'off',
       italics: 'off',
       underline: 'on',
@@ -546,7 +547,7 @@ describe('parallel states', () => {
     Object.keys(expected[fromState]).forEach((eventTypes) => {
       const toState = expected[fromState][eventTypes];
 
-      it(`should go from ${fromState} to ${JSON.stringify(
+      it(`should go from ${fromState} to ${stringify(
         toState
       )} on ${eventTypes}`, () => {
         const resultState = testMultiTransition(

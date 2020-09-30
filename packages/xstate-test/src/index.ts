@@ -7,6 +7,7 @@ import {
 } from '@xstate/graph';
 import { StateMachine, EventObject, State, StateValue } from 'xstate';
 import slimChalk from './slimChalk';
+import stringify from 'fast-safe-stringify';
 import {
   TestModelCoverage,
   TestModelOptions,
@@ -138,7 +139,7 @@ export class TestModel<TTestContext, TContext> {
           const { type, ...other } = event;
 
           const propertyString = Object.keys(other).length
-            ? ` (${JSON.stringify(other)})`
+            ? ` (${stringify(other)})`
             : '';
 
           return `${type}${propertyString}`;
@@ -194,10 +195,10 @@ export class TestModel<TTestContext, TContext> {
                 throw err;
               }
             } catch (err) {
-              const targetStateString = `${JSON.stringify(path.state.value)} ${
+              const targetStateString = `${stringify(path.state.value)} ${
                 path.state.context === undefined
                   ? ''
-                  : JSON.stringify(path.state.context)
+                  : stringify(path.state.context)
               }`;
 
               let hasFailed = false;
@@ -205,14 +206,12 @@ export class TestModel<TTestContext, TContext> {
                 '\nPath:\n' +
                 testPathResult.segments
                   .map((s) => {
-                    const stateString = `${JSON.stringify(
-                      s.segment.state.value
-                    )} ${
+                    const stateString = `${stringify(s.segment.state.value)} ${
                       s.segment.state.context === undefined
                         ? ''
-                        : JSON.stringify(s.segment.state.context)
+                        : stringify(s.segment.state.context)
                     }`;
-                    const eventString = `${JSON.stringify(s.segment.event)}`;
+                    const eventString = `${stringify(s.segment.event)}`;
 
                     const stateResult = `\tState: ${
                       hasFailed
@@ -352,7 +351,7 @@ export class TestModel<TTestContext, TContext> {
 
 function getDescription<T, TContext>(state: State<TContext, any>): string {
   const contextString =
-    state.context === undefined ? '' : `(${JSON.stringify(state.context)})`;
+    state.context === undefined ? '' : `(${stringify(state.context)})`;
 
   const stateStrings = state.configuration
     .filter((sn) => sn.type === 'atomic')
@@ -368,7 +367,7 @@ function getDescription<T, TContext>(state: State<TContext, any>): string {
         return description(state);
       }
 
-      return description ? `"${description}"` : JSON.stringify(state.value);
+      return description ? `"${description}"` : stringify(state.value);
     });
 
   return (

@@ -1,3 +1,4 @@
+import stringify from 'fast-safe-stringify';
 import { Machine } from '../../src/index';
 import { testMultiTransition } from '../utils';
 
@@ -54,7 +55,7 @@ describe('Example 6.17', () => {
     Object.keys(expected[fromState]).forEach((eventTypes) => {
       const toState = expected[fromState][eventTypes];
 
-      it(`should go from ${fromState} to ${JSON.stringify(
+      it(`should go from ${fromState} to ${stringify(
         toState
       )} on ${eventTypes}`, () => {
         const resultState = testMultiTransition(machine, fromState, eventTypes);
@@ -119,7 +120,7 @@ describe('Jump to ID', () => {
     Object.keys(expected[fromState]).forEach((eventTypes) => {
       const toState = expected[fromState][eventTypes];
 
-      it(`should go from ${fromState} to ${JSON.stringify(
+      it(`should go from ${fromState} to ${stringify(
         toState
       )} on ${eventTypes}`, () => {
         const resultState = testMultiTransition(machine, fromState, eventTypes);

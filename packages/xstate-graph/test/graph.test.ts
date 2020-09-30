@@ -7,6 +7,7 @@ import {
 } from '../src/index';
 import { getSimplePathsAsArray, getAdjacencyMap } from '../src/graph';
 import { assign } from 'xstate';
+import stringify from 'fast-safe-stringify';
 
 describe('@xstate/graph', () => {
   const pedestrianStates = {
@@ -170,7 +171,7 @@ describe('@xstate/graph', () => {
     it('the initial state should have a zero-length path', () => {
       expect(
         getShortestPaths(lightMachine)[
-          JSON.stringify(lightMachine.initialState.value)
+          stringify(lightMachine.initialState.value)
         ].paths[0].segments
       ).toHaveLength(0);
     });
@@ -338,7 +339,7 @@ describe('@xstate/graph', () => {
           const ctx = {
             count: state.context.count
           };
-          return JSON.stringify(state.value) + ' | ' + JSON.stringify(ctx);
+          return stringify(state.value) + ' | ' + stringify(ctx);
         },
         events: {
           INC: [{ type: 'INC', value: 1 }]

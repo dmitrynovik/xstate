@@ -17,6 +17,7 @@ import { log, actionTypes, raise } from '../src/actions';
 import { isObservable } from '../src/utils';
 import { interval, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import stringify from 'fast-safe-stringify';
 
 const lightMachine = Machine({
   id: 'light',
@@ -161,7 +162,7 @@ describe('interpreter', () => {
       const nextState = lightMachine.transition(currentState, 'TIMER');
 
       // saves state and recreate it
-      const recreated = JSON.parse(JSON.stringify(nextState));
+      const recreated = JSON.parse(stringify(nextState));
       const previousState = State.create(recreated);
       const resolvedState = lightMachine.resolveState(previousState);
 

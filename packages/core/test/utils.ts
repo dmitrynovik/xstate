@@ -1,5 +1,6 @@
 import { StateNode, State } from '../src/index';
 import { matchesState } from '../src';
+import stringify from 'fast-safe-stringify';
 
 export function testMultiTransition<TExt>(
   machine: StateNode<TExt>,
@@ -24,7 +25,7 @@ export function testAll(machine: StateNode, expected: {}): void {
     Object.keys(expected[fromState]).forEach((eventTypes) => {
       const toState = expected[fromState][eventTypes];
 
-      it(`should go from ${fromState} to ${JSON.stringify(
+      it(`should go from ${fromState} to ${stringify(
         toState
       )} on ${eventTypes}`, () => {
         const resultState = testMultiTransition(machine, fromState, eventTypes);

@@ -1,3 +1,4 @@
+import stringify from "fast-safe-stringify";
 import {
   StateNode,
   TransitionDefinition,
@@ -164,7 +165,7 @@ export function isActive(
 }
 
 export function serializeAction(action: ActionObject<any, any>): string {
-  return JSON.stringify(action);
+  return stringify(action);
 }
 
 export function isBuiltinEvent(eventType: string): boolean {

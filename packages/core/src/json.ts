@@ -1,5 +1,6 @@
 import { StateNode, ActionObject, Guard, InvokeDefinition } from './';
 import { mapValues, isFunction } from './utils';
+import * as safeStringify from 'fast-safe-stringify';
 
 interface JSONFunction {
   $function: string;
@@ -71,7 +72,7 @@ export function machineToJSON(stateNode: StateNode): StateNodeConfig {
 }
 
 export function stringify(machine: StateNode): string {
-  return JSON.stringify(machineToJSON(machine), (_, value) => {
+  return safeStringify.default(machineToJSON(machine), (_, value) => {
     if (isFunction(value)) {
       return { $function: value.toString() };
     }

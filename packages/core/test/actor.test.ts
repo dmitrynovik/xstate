@@ -11,6 +11,7 @@ import {
 import { Actor } from '../src/Actor';
 import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
+import stringify from 'fast-safe-stringify';
 
 describe('spawning machines', () => {
   const todoMachine = Machine({
@@ -693,7 +694,7 @@ describe('actors', () => {
     const falseSyncOptions = [{}, { sync: false }];
 
     falseSyncOptions.forEach((falseSyncOption) => {
-      it(`parent state should NOT be changed regardless of unsynced child actor update (options: ${JSON.stringify(
+      it(`parent state should NOT be changed regardless of unsynced child actor update (options: ${stringify(
         falseSyncOption
       )})`, (done) => {
         const syncChildMachine = Machine({
@@ -741,7 +742,7 @@ describe('actors', () => {
         }, 20);
       });
 
-      it(`parent state should be changed if unsynced child actor manually sends update event (options: ${JSON.stringify(
+      it(`parent state should be changed if unsynced child actor manually sends update event (options: ${stringify(
         falseSyncOption
       )})`, (done) => {
         const syncChildMachine = Machine({

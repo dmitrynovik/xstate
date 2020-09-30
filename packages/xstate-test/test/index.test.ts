@@ -2,6 +2,7 @@
 import { createModel } from '../src';
 import { Machine, assign } from 'xstate';
 import stripAnsi from 'strip-ansi';
+import stringify from 'fast-safe-stringify';
 
 interface DieHardContext {
   three: number;
@@ -173,9 +174,9 @@ describe('testing a model (simplePathsTo)', () => {
   dieHardModel
     .getSimplePathPlansTo('success') // ...
     .forEach((plan) => {
-      describe(`reaches state ${JSON.stringify(
-        plan.state.value
-      )} (${JSON.stringify(plan.state.context)})`, () => {
+      describe(`reaches state ${stringify(plan.state.value)} (${stringify(
+        plan.state.context
+      )})`, () => {
         plan.paths.forEach((path) => {
           it(path.description, () => {
             const testJugs = new Jugs();
@@ -192,9 +193,9 @@ describe('path.test()', () => {
   });
 
   plans.forEach((plan) => {
-    describe(`reaches state ${JSON.stringify(
-      plan.state.value
-    )} (${JSON.stringify(plan.state.context)})`, () => {
+    describe(`reaches state ${stringify(plan.state.value)} (${stringify(
+      plan.state.context
+    )})`, () => {
       plan.paths.forEach((path) => {
         describe(path.description, () => {
           it(`reaches the target state`, () => {

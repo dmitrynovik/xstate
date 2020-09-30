@@ -1,3 +1,4 @@
+import stringify from 'fast-safe-stringify';
 import {
   StateNode,
   State,
@@ -64,14 +65,14 @@ export function getChildren(stateNode: StateNode): StateNode[] {
 export function serializeState<TContext>(state: State<TContext, any>): string {
   const { value, context } = state;
   return context === undefined
-    ? JSON.stringify(value)
-    : JSON.stringify(value) + ' | ' + JSON.stringify(context);
+    ? stringify(value)
+    : stringify(value) + ' | ' + stringify(context);
 }
 
 export function serializeEvent<TEvent extends EventObject>(
   event: TEvent
 ): string {
-  return JSON.stringify(event);
+  return stringify(event);
 }
 
 export function deserializeEventString<TEvent extends EventObject>(

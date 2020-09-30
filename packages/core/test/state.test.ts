@@ -1,6 +1,7 @@
 import { Machine, State, StateFrom, interpret } from '../src/index';
 import { initEvent, assign } from '../src/actions';
 import { toSCXMLEvent } from '../src/utils';
+import stringify from 'fast-safe-stringify';
 
 type Events =
   | { type: 'BAR_EVENT' }
@@ -308,7 +309,7 @@ describe('State', () => {
   describe('State.create()', () => {
     it('should be able to create a state from a JSON config', () => {
       const { initialState } = machine;
-      const jsonInitialState = JSON.parse(JSON.stringify(initialState));
+      const jsonInitialState = JSON.parse(stringify(initialState));
 
       const stateFromConfig = State.create(jsonInitialState) as StateFrom<
         typeof machine
@@ -322,7 +323,7 @@ describe('State', () => {
     it('should preserve state.nextEvents using machine.resolveState', () => {
       const { initialState } = machine;
       const { nextEvents } = initialState;
-      const jsonInitialState = JSON.parse(JSON.stringify(initialState));
+      const jsonInitialState = JSON.parse(stringify(initialState));
 
       const stateFromConfig = State.create(jsonInitialState) as StateFrom<
         typeof machine

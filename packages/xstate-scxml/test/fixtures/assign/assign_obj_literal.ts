@@ -1,4 +1,5 @@
 import { Machine, actions, assign } from 'xstate';
+import stringify from 'fast-safe-stringify';
 
 export default Machine<any>({
   initial: 'uber',
@@ -9,7 +10,7 @@ export default Machine<any>({
         '*': {
           target: '#fail',
           actions: actions.log(
-            (_, e) => `unhandled input ${JSON.stringify(e)}`,
+            (_, e) => `unhandled input ${stringify(e)}`,
             'TEST'
           )
         }

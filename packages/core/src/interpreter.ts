@@ -57,6 +57,7 @@ import { isInFinalState } from './stateUtils';
 import { registry } from './registry';
 import { registerService, unregisterService } from './devTools';
 import * as serviceScope from './serviceScope';
+import stringify from 'fast-safe-stringify';
 
 export type StateListener<
   TContext,
@@ -539,7 +540,7 @@ export class Interpreter<
           false,
           `Event "${_event.name}" was sent to stopped service "${
             this.machine.id
-          }". This service has already reached its final state, and will not transition.\nEvent: ${JSON.stringify(
+          }". This service has already reached its final state, and will not transition.\nEvent: ${stringify(
             _event.data
           )}`
         );
@@ -557,7 +558,7 @@ export class Interpreter<
           false,
           `Event "${_event.name}" was sent to uninitialized service "${
             this.machine.id
-          }" and is deferred. Make sure .start() is called for this service.\nEvent: ${JSON.stringify(
+          }" and is deferred. Make sure .start() is called for this service.\nEvent: ${stringify(
             _event.data
           )}`
         );
@@ -567,7 +568,7 @@ export class Interpreter<
         `Event "${_event.name}" was sent to uninitialized service "${
           this.machine.id
           // tslint:disable-next-line:max-line-length
-        }". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.\nEvent: ${JSON.stringify(
+        }". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.\nEvent: ${stringify(
           _event.data
         )}`
       );
@@ -597,7 +598,7 @@ export class Interpreter<
           false,
           `${events.length} event(s) were sent to uninitialized service "${
             this.machine.id
-          }" and are deferred. Make sure .start() is called for this service.\nEvent: ${JSON.stringify(
+          }" and are deferred. Make sure .start() is called for this service.\nEvent: ${stringify(
             event
           )}`
         );

@@ -1,3 +1,4 @@
+import stringify from 'fast-safe-stringify';
 import {
   Interpreter,
   createMachine,
@@ -117,8 +118,8 @@ export const inspectMachine = createMachine<{
           globalThis.__xstate__.services.forEach((service) => {
             ctx.client.send({
               type: 'service.register',
-              machine: JSON.stringify(service.machine),
-              state: JSON.stringify(service.state || service.initialState),
+              machine: stringify(service.machine),
+              state: stringify(service.state || service.initialState),
               sessionId: service.sessionId
             });
           });
@@ -195,8 +196,8 @@ export function inspect(
   globalThis.__xstate__.onRegister((service) => {
     inspectService.send({
       type: 'service.register',
-      machine: JSON.stringify(service.machine),
-      state: JSON.stringify(service.state || service.initialState),
+      machine: stringify(service.machine),
+      state: stringify(service.state || service.initialState),
       sessionId: service.sessionId,
       id: service.id,
       parent: service.parent?.sessionId
@@ -204,7 +205,7 @@ export function inspect(
 
     inspectService.send({
       type: 'service.event',
-      event: JSON.stringify((service.state || service.initialState)._event),
+      event: stringify((service.state || service.initialState)._event),
       sessionId: service.sessionId
     });
 
@@ -219,7 +220,7 @@ export function inspect(
     ) {
       inspectService.send({
         type: 'service.event',
-        event: JSON.stringify(
+        event: stringify(
           toSCXMLEvent(toEventObject(event as EventObject, payload))
         ),
         sessionId: service.sessionId
@@ -231,7 +232,7 @@ export function inspect(
     service.subscribe((state) => {
       inspectService.send({
         type: 'service.state',
-        state: JSON.stringify(state),
+        state: stringify(state),
         sessionId: service.sessionId
       });
     });

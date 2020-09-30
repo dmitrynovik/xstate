@@ -1,3 +1,4 @@
+import stringify from 'fast-safe-stringify';
 // hello
 
 import { State } from 'xstate';
@@ -32,7 +33,7 @@ const serializeState = (state?: State<any, any>): string => {
   }
   const { value, context } = state;
 
-  return JSON.stringify({ value, context });
+  return stringify({ value, context });
 };
 
 interface AnalyzerOptions {
@@ -65,7 +66,7 @@ export function createAnalyzer(
     const stateSerial = serializeState(state);
     const prevState = state.history;
     const prevStateSerial = serializeState(prevState);
-    const eventSerial = JSON.stringify(state.event);
+    const eventSerial = stringify(state.event);
 
     analysis.count++;
 

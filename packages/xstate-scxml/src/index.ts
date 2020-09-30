@@ -1,3 +1,4 @@
+import stringify from 'fast-safe-stringify';
 import { js2xml, Element as XMLElement, Attributes } from 'xml-js';
 import {
   StateMachine,
@@ -46,7 +47,7 @@ function actionToSCXML(action: ActionObject<any, any>): XMLElement {
     elements: [
       {
         type: 'text',
-        text: JSON.stringify(action)
+        text: stringify(action)
       }
     ]
   };
@@ -85,7 +86,7 @@ function doneDataToSCXML(data: any): XMLElement {
         type: 'element',
         name: 'content',
         attributes: {
-          expr: JSON.stringify(data)
+          expr: stringify(data)
         }
       }
     ]

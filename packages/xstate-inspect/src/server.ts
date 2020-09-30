@@ -10,6 +10,7 @@ import {
 import { toSCXMLEvent } from 'xstate/lib/utils';
 
 import { inspectMachine } from './';
+import stringify from 'fast-safe-stringify';
 
 const wss = new WebSocket.Server({
   port: 8888
@@ -55,7 +56,7 @@ export function inspectServer() {
       send: (e: any) => {
         wss.clients.forEach((c) => {
           if (c.readyState === WebSocket.OPEN) {
-            c.send(JSON.stringify(e));
+            c.send(stringify(e));
           }
         });
       }
@@ -75,15 +76,15 @@ export function inspectServer() {
   globalThis.__xstate__.onRegister((service) => {
     inspectService.send({
       type: 'service.register',
-      machine: JSON.stringify(service.machine),
-      state: JSON.stringify(service.state || service.initialState),
+      machine: stringify(service.machine),
+      state: stringify(service.state || service.initialState),
       id: service.id
     });
 
     service.subscribe((state) => {
       inspectService.send({
         type: 'service.state',
-        state: JSON.stringify(state),
+        state: stringify(state),
         id: service.id
       });
     });

@@ -9,6 +9,7 @@ import UseMachine from './UseMachine.vue';
 import UseMachineNoExtraOptions from './UseMachine-no-extra-options.vue';
 import { Machine, assign, doneInvoke } from 'xstate';
 import { createLocalVue, mount } from '@vue/test-utils';
+import stringify from 'fast-safe-stringify';
 
 afterEach(cleanup);
 
@@ -71,7 +72,7 @@ describe('useMachine composition function', () => {
 
   it('should work with a component with rehydrated state config', async () => {
     const persistedFetchStateConfig = JSON.parse(
-      JSON.stringify(persistedFetchState)
+      stringify(persistedFetchState)
     );
     const { getByText, getByTestId } = renderWithCompositionApi(UseMachine, {
       propsData: { persistedState: persistedFetchStateConfig }
