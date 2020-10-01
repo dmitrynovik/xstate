@@ -2,7 +2,6 @@ import { createMachine, assign } from '../src/index';
 import * as machineSchema from '../src/machine.schema.json';
 
 import * as Ajv from 'ajv';
-import stringify from 'fast-safe-stringify';
 
 const ajv = new Ajv();
 const validate = ajv.compile(machineSchema);
@@ -86,12 +85,12 @@ describe('json', () => {
       }
     });
 
-    const json = JSON.parse(stringify(machine.definition));
+    const json = JSON.parse(JSON.stringify(machine.definition));
 
     try {
       validate(json);
     } catch (err) {
-      throw new Error(stringify(JSON.parse(err.message), null, 2));
+      throw new Error(JSON.stringify(JSON.parse(err.message), null, 2));
     }
 
     expect(validate.errors).toBeNull();
@@ -128,7 +127,7 @@ describe('json', () => {
       }
     });
 
-    const machineJSON = stringify(machine);
+    const machineJSON = JSON.stringify(machine);
 
     const machineObject = JSON.parse(machineJSON);
 
